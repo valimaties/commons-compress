@@ -309,6 +309,7 @@ public class SevenZOutputFile implements Closeable {
 
         writeHeader(header);
         header.flush();
+        packedSize += header.size();
         final byte[] headerBytes = headerBaos.toByteArray();
         channel.write(ByteBuffer.wrap(headerBytes));
 
@@ -336,6 +337,7 @@ public class SevenZOutputFile implements Closeable {
         bb.putInt(SevenZFile.sevenZSignature.length + 2, (int) crc32.getValue());
         bb.flip();
         channel.write(bb);
+        //packedSize += channel.size();
     }
 
     private Iterable<? extends SevenZMethodConfiguration> getContentMethods(final SevenZArchiveEntry entry) {
