@@ -133,6 +133,11 @@ public class SevenZOutputFile implements Closeable {
         return packedSize;
     }
 
+    private long channelSize;
+    public long getChannelSize(){
+        return channelSize;
+    }
+
     /**
      * Opens file to write a 7z archive to.
      *
@@ -338,6 +343,7 @@ public class SevenZOutputFile implements Closeable {
         bb.flip();
         channel.write(bb);
         //packedSize += channel.size();
+        channelSize = channel.size();
     }
 
     private Iterable<? extends SevenZMethodConfiguration> getContentMethods(final SevenZArchiveEntry entry) {
